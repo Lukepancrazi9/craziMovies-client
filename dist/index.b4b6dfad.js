@@ -27381,64 +27381,57 @@ var _s = $RefreshSig$();
 const MainView = ()=>{
     _s();
     const [movies, setMovies] = (0, _react.useState)([]);
+    const [selectedMovie, setSelectedMovie] = (0, _react.useState)(null);
     (0, _react.useEffect)(()=>{
         fetch("https://crazi-movies-5042ca35c2c0.herokuapp.com/movies").then((response)=>response.json()).then((movies)=>{
-            const moviesFromApi = movies.map((movie)=>{
-                return {
-                    id: movie._id,
-                    title: movie.title,
-                    description: movie.description,
-                    genre: movie.genre,
-                    director: movie.director,
-                    featured: movie.featured
-                };
-            });
-            setMovies(moviesFromApi);
-        });
+            setMovies(movies);
+        }).catch((e)=>console.log(e));
     }, []);
-    const [selectedMovie, setSelectedMovie] = (0, _react.useState)(null);
-    if (selectedMovie) {
-        let similarMovies = movies.filter((movie)=>movie.title !== selectedMovie.title && movie.genre.name === selectedMovie.genre.name);
-        return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
-            children: [
-                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieView.MovieView), {
-                    movie: selectedMovie,
-                    onBackClick: ()=>setSelectedMovie(null)
-                }, void 0, false, {
-                    fileName: "src/components/main-view/main-view.jsx",
-                    lineNumber: 35,
-                    columnNumber: 13
-                }, undefined),
-                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("hr", {}, void 0, false, {
-                    fileName: "src/components/main-view/main-view.jsx",
-                    lineNumber: 36,
-                    columnNumber: 13
-                }, undefined),
-                similarMovies.length > 0 && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
-                    children: "Similar movies"
-                }, void 0, false, {
-                    fileName: "src/components/main-view/main-view.jsx",
-                    lineNumber: 37,
-                    columnNumber: 42
-                }, undefined),
-                similarMovies.map((movie)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCard.MovieCard), {
-                        movie: movie,
-                        onMovieClick: (newSelectedMovie)=>{
-                            setSelectedMovie(movie);
-                        }
-                    }, movie.id, false, {
-                        fileName: "src/components/main-view/main-view.jsx",
-                        lineNumber: 39,
-                        columnNumber: 17
-                    }, undefined))
-            ]
-        }, void 0, true);
-    }
+    if (selectedMovie) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieView.MovieView), {
+        movie: selectedMovie,
+        onBackClick: ()=>setSelectedMovie(null)
+    }, void 0, false, {
+        fileName: "src/components/main-view/main-view.jsx",
+        lineNumber: 19,
+        columnNumber: 7
+    }, undefined);
+    //         const moviesFromApi = movies.map((movie) => {
+    //           return {
+    //             id: movie._id,
+    //             title: movie.title,
+    //             description: movie.description,
+    //             genre: movie.genre,
+    //             director: movie.director,
+    //             featured: movie.featured
+    //           };
+    //         });
+    //         setMovies(moviesFromApi);
+    //       });
+    //     }, []);
+    //     if (selectedMovie) {
+    //       let similarMovies = movies.filter((movie) => 
+    //         movie.title !== selectedMovie.title &&
+    //         movie.genre.name === selectedMovie.genre.name);
+    //       return (
+    //         <>
+    //             <MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
+    //             <hr />
+    //             {similarMovies.length > 0 && <h2>Similar movies</h2>}
+    //             {similarMovies.map((movie) =>
+    //                 <MovieCard key={movie.id}
+    //                     movie={movie}
+    //                     onMovieClick={(newSelectedMovie) => {
+    //                         setSelectedMovie(movie);
+    //                     }}
+    //                 />)}
+    //         </>
+    //       );
+    //   }
     if (movies.length === 0) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: "The list is empty!"
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 50,
+        lineNumber: 58,
         columnNumber: 14
     }, undefined);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -27449,16 +27442,16 @@ const MainView = ()=>{
                 }
             }, movie._id, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 56,
+                lineNumber: 64,
                 columnNumber: 9
             }, undefined))
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 54,
+        lineNumber: 62,
         columnNumber: 5
     }, undefined);
 };
-_s(MainView, "llzgrUkvR/+OoCNfiqlA1H2LLFI=");
+_s(MainView, "PO+XgOji7E32nFJj3H5UPLPJ7w4=");
 _c = MainView;
 var _c;
 $RefreshReg$(_c, "MainView");
