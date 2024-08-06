@@ -27520,7 +27520,7 @@ _c = MovieCard;
 MovieCard.propTypes = {
     movie: (0, _propTypesDefault.default).shape({
         Title: (0, _propTypesDefault.default).string.isRequired,
-        ImagePath: (0, _propTypesDefault.default).string
+        ImageUrl: (0, _propTypesDefault.default).string
     }).isRequired
 }; // MovieCard.propTypes = {
  //     movie: PropTypes.shape({
