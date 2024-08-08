@@ -1,24 +1,55 @@
 import { useState, useEffect } from "react";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
+import { LoginView } from "../login-view/login-view";
 
 export const MainView = () => {
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
+  const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
+
 
   useEffect(() => {
-    fetch("https://crazi-movies-5042ca35c2c0.herokuapp.com/movies")
+    if (!token) {
+      return;
+    }
+
+    fetch("https://crazi-movies-5042ca35c2c0.herokuapp.com/movies", {
+      headers: { Authorization: `Bearer ${token}` }
+    })
       .then((response) => response.json())
-      .then((movies) => {
-        setMovies(movies)})
-          .catch(e=>console.log(e))
-          
-      }, []);
-  if (selectedMovie) {
-    return (
-      <MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
-    );
-  }
+      .then((data) => {
+        console.log(data);
+      });
+  }, [token]);
+
+    if (!user) {
+        return (
+          <LoginView
+            onLoggedIn={(user, token) => {
+              setUser(user);
+              setToken(token);
+            }}
+          />
+        );
+      }
+
+    if (selectedMovie) {
+        return (
+            <>
+              <button
+                onClick={() => {
+                  setUser(null);
+                  setToken(null);
+                }}
+              >
+                Logout
+              </button>
+        <MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
+        </>
+      );
+    }
 //         const moviesFromApi = movies.map((movie) => {
 //           return {
 //             id: movie._id,
