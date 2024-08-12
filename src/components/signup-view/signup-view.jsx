@@ -1,22 +1,22 @@
 import{ useState } from "react"
 
 export const SignupView = () => {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [email, setEmail] = useState("");
-    const [birthday, setBirthday] = useState("");
+    const [Username, setUsername] = useState("");
+    const [Password, setPassword] = useState("");
+    const [Email, setEmail] = useState("");
+    const [Birthday, setBirthday] = useState("");
   
     const handleSubmit = (event) => {
       event.preventDefault();
   
       const data = {
-        Username: username,
-        Password: password,
-        Email: email,
-        Birthday: birthday
+        Username: Username,
+        Password: Password,
+        Email: Email,
+        Birthday: Birthday
       };
   
-      fetch("SIGNUP_URL", {
+      fetch("https://crazi-movies-5042ca35c2c0.herokuapp.com/users", {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
@@ -38,7 +38,7 @@ export const SignupView = () => {
           Username:
           <input
             type="text"
-            value={username}
+            value={Username}
             onChange={(e) => setUsername(e.target.value)}
             required
             minLength="3"
@@ -48,7 +48,7 @@ export const SignupView = () => {
           Password:
           <input
             type="password"
-            value={password}
+            value={Password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
@@ -57,7 +57,7 @@ export const SignupView = () => {
           Email:
           <input
             type="email"
-            value={email}
+            value={Email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
@@ -66,7 +66,7 @@ export const SignupView = () => {
           Birthday:
           <input
             type="date"
-            value={birthday}
+            value={Birthday}
             onChange={(e) => setBirthday(e.target.value)}
             required
           />

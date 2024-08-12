@@ -28559,19 +28559,19 @@ var _react = require("react");
 var _s = $RefreshSig$();
 const SignupView = ()=>{
     _s();
-    const [username, setUsername] = (0, _react.useState)("");
-    const [password, setPassword] = (0, _react.useState)("");
-    const [email, setEmail] = (0, _react.useState)("");
-    const [birthday, setBirthday] = (0, _react.useState)("");
+    const [Username, setUsername] = (0, _react.useState)("");
+    const [Password, setPassword] = (0, _react.useState)("");
+    const [Email, setEmail] = (0, _react.useState)("");
+    const [Birthday, setBirthday] = (0, _react.useState)("");
     const handleSubmit = (event)=>{
         event.preventDefault();
         const data = {
-            Username: username,
-            Password: password,
-            Email: email,
-            Birthday: birthday
+            Username: Username,
+            Password: Password,
+            Email: Email,
+            Birthday: Birthday
         };
-        fetch("SIGNUP_URL", {
+        fetch("https://crazi-movies-5042ca35c2c0.herokuapp.com/users", {
             method: "POST",
             body: JSON.stringify(data),
             headers: {
@@ -28592,7 +28592,7 @@ const SignupView = ()=>{
                     "Username:",
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
                         type: "text",
-                        value: username,
+                        value: Username,
                         onChange: (e)=>setUsername(e.target.value),
                         required: true,
                         minLength: "3"
@@ -28612,7 +28612,7 @@ const SignupView = ()=>{
                     "Password:",
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
                         type: "password",
-                        value: password,
+                        value: Password,
                         onChange: (e)=>setPassword(e.target.value),
                         required: true
                     }, void 0, false, {
@@ -28631,7 +28631,7 @@ const SignupView = ()=>{
                     "Email:",
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
                         type: "email",
-                        value: email,
+                        value: Email,
                         onChange: (e)=>setEmail(e.target.value),
                         required: true
                     }, void 0, false, {
@@ -28650,7 +28650,7 @@ const SignupView = ()=>{
                     "Birthday:",
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
                         type: "date",
-                        value: birthday,
+                        value: Birthday,
                         onChange: (e)=>setBirthday(e.target.value),
                         required: true
                     }, void 0, false, {
@@ -28679,7 +28679,7 @@ const SignupView = ()=>{
         columnNumber: 7
     }, undefined);
 };
-_s(SignupView, "jsOQN3GC2XlBG9ITlzCdpyJOnso=");
+_s(SignupView, "3Ly2uGwm2IaM8/h5bXhOpVGqO50=");
 _c = SignupView;
 var _c;
 $RefreshReg$(_c, "SignupView");
