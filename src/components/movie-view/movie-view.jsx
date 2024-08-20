@@ -9,7 +9,7 @@ export const MovieView = ({ movies }) => {
   console.log("Movies array:", movies);
 
   // Find the movie based on MovieId
-  const movie = movies.find((m) => m.id === MovieID);
+  const movie = movies.find((m) => m.Id === MovieID);
 
   // Log the found movie
   console.log("Selected movie:", movie);
