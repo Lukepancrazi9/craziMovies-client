@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { MovieCard } from "../movie-card/movie-card";
+import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
 
 export const ProfileView = ({ user, movies, onUpdateUser, onDeregister }) => {
   const [username, setUsername] = useState(user.Username);
@@ -8,20 +9,28 @@ export const ProfileView = ({ user, movies, onUpdateUser, onDeregister }) => {
   const [email, setEmail] = useState(user.Email);
   const [birthdate, setBirthdate] = useState(user.Birthday);
   const [favoriteMovies, setFavoriteMovies] = useState([]);
+  const [error, setError] = useState(null);
 
   const navigate = useNavigate();
+  const token = localStorage.getItem("token"); // Ensure token is properly retrieved
 
   useEffect(() => {
-    fetch(`https://crazi-movies-5042ca35c2c0.herokuapp.com/users/${user.Username}`)
+    if (!user.Username || !token) return;
+
+    fetch(`https://crazi-movies-5042ca35c2c0.herokuapp.com/users/${user.Username}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
       .then(response => response.json())
       .then(data => {
-        setFavoriteMovies(movies.filter(m => user.Favorites.includes(m.Id)));
+        setFavoriteMovies(movies.filter(m => data.Favorites.includes(m.Id)));
       })
-      .catch(e => console.error(e));
-  }, [user, movies]);
+      .catch(e => {
+        console.error("Error fetching user data:", e);
+        setError("Failed to load favorite movies.");
+      });
+  }, [user.Username, token, movies]);
 
   const handleUpdate = () => {
-    // Call your update API with the new user details
     onUpdateUser({ Username: username, Password: password, Email: email, Birthday: birthdate });
   };
 
@@ -31,37 +40,63 @@ export const ProfileView = ({ user, movies, onUpdateUser, onDeregister }) => {
   };
 
   return (
-    <div>
+    <Container className="my-4">
       <h2>Profile</h2>
-      <div>
-        <label>Username: </label>
-        <input value={username} onChange={(e) => setUsername(e.target.value)} />
-      </div>
-      <div>
-        <label>Password: </label>
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-      </div>
-      <div>
-        <label>Email: </label>
-        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-      </div>
-      <div>
-        <label>Birthdate: </label>
-        <input type="date" value={birthdate} onChange={(e) => setBirthdate(e.target.value)} />
-      </div>
-      <button onClick={handleUpdate}>Update</button>
-      <button onClick={handleDeregister}>Deregister</button>
-
+      {error && <Alert variant="danger">{error}</Alert>}
+      
+      <Row className="mb-4">
+        <Col md={6}>
+          <Form>
+            <Form.Group className="mb-3">
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Birthdate</Form.Label>
+              <Form.Control
+                type="date"
+                value={birthdate}
+                onChange={(e) => setBirthdate(e.target.value)}
+              />
+            </Form.Group>
+            <Button variant="primary" onClick={handleUpdate}>Update</Button>
+            <Button variant="danger" onClick={handleDeregister} className="ms-2">Deregister</Button>
+          </Form>
+        </Col>
+      </Row>
+  
       <h3>Favorite Movies</h3>
-      <div>
+      <Row>
         {favoriteMovies.length === 0 ? (
-          <p>No favorite movies.</p>
+          <Col>No favorite movies.</Col>
         ) : (
           favoriteMovies.map(movie => (
-            <MovieCard key={movie.Id} movie={movie} />
+            <Col md={3} className="mb-4" key={movie.Id}>
+              <MovieCard movie={movie} user={user} onFavorite={() => {}} />
+            </Col>
           ))
         )}
-      </div>
-    </div>
+      </Row>
+    </Container>
   );
 };

@@ -1,7 +1,15 @@
 import { Navbar, Container, Nav } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const NavigationBar = ({ user, onLoggedOut }) => {
+  const navigate = useNavigate();
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    onLoggedOut();
+    navigate("/login");
+  };
+
   return (
     <Navbar bg="light" expand="lg">
       <Container>
@@ -12,13 +20,11 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link as={Link} to="/">Home</Nav.Link>
-            <Nav.Link as={Link} to="/movies">Movies</Nav.Link>
-            <Nav.Link as={Link} to="/genres">Genres</Nav.Link>
-            <Nav.Link as={Link} to="/directors">Directors</Nav.Link>
+            {/* Additional Nav Links can be uncommented as needed */}
             {user ? (
               <>
-                <Nav.Link as={Link} to={`/users/${user.Username}`}>Profile</Nav.Link>
-                <Nav.Link as={Link} to="/" onClick={onLoggedOut}>Logout</Nav.Link>
+                <Nav.Link as={Link} to="/profile">Profile</Nav.Link>
+                <Nav.Link as={Link} to="/" onClick={handleLogout}>Logout</Nav.Link>
               </>
             ) : (
               <>

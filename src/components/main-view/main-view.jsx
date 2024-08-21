@@ -54,22 +54,20 @@ export const MainView = () => {
       ? user.Favorites.filter(id => id !== movieId)
       : [...user.Favorites, movieId];
   
-    // Update user favorites in the backend
-    fetch(`https://crazi-movies-5042ca35c2c0.herokuapp.com/users/${user.Username}`, {
-      method: 'PUT',
+    fetch(`https://crazi-movies-5042ca35c2c0.herokuapp.com/users/${user.Username}/movies/${movieId}`, {
+      method: updatedFavorites.includes(movieId) ? 'POST' : 'DELETE',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`
-      },
-      body: JSON.stringify({ FavoriteMovies: updatedFavorites })
+      }
     })
       .then(response => response.json())
       .then(updatedUser => {
         setUser(updatedUser);
         localStorage.setItem('user', JSON.stringify(updatedUser));
       })
-      .catch(e => console.error(e));
-  };  
+      .catch(e => console.error("Error updating favorites:", e));
+  };
 
   return (
     <BrowserRouter>
@@ -154,13 +152,12 @@ export const MainView = () => {
                     user={user}
                     movies={movies}
                     onUpdateUser={(updatedUser) => {
-                      // Call your update user API here
                       console.log("Update user", updatedUser);
                     }}
                     onDeregister={(username) => {
-                      // Call your deregister API here
                       console.log("Deregister user", username);
                     }}
+                    toggleFavorite={toggleFavorite} 
                   />
                 </Col>
               )
