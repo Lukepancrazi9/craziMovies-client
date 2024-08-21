@@ -3,6 +3,7 @@ import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
+import { ProfileView } from "../profile-view/profile-view";
 import { Row, Col } from "react-bootstrap";
 import { BrowserRouter, Routes, Route, Navigate, Router } from "react-router-dom";
 import { NavigationBar } from "../navigation-bar/navigation-bar";
@@ -47,6 +48,28 @@ export const MainView = () => {
     setToken(null);
     localStorage.clear();
   };
+
+  const toggleFavorite = (movieId) => {
+    const updatedFavorites = user.Favorites.includes(movieId)
+      ? user.Favorites.filter(id => id !== movieId)
+      : [...user.Favorites, movieId];
+  
+    // Update user favorites in the backend
+    fetch(`https://crazi-movies-5042ca35c2c0.herokuapp.com/users/${user.Username}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({ FavoriteMovies: updatedFavorites })
+    })
+      .then(response => response.json())
+      .then(updatedUser => {
+        setUser(updatedUser);
+        localStorage.setItem('user', JSON.stringify(updatedUser));
+      })
+      .catch(e => console.error(e));
+  };  
 
   return (
     <BrowserRouter>
@@ -113,10 +136,33 @@ export const MainView = () => {
                       className="mb-4"
                       key={movie.Id}
                     >
-                      <MovieCard movie={movie} />
+                      <MovieCard movie={movie} onFavorite={() => toggleFavorite(movie.Id)} />
                     </Col>
                   ))}
                 </>
+              )
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              !user ? (
+                <Navigate to="/login" replace />
+              ) : (
+                <Col md={8}>
+                  <ProfileView 
+                    user={user}
+                    movies={movies}
+                    onUpdateUser={(updatedUser) => {
+                      // Call your update user API here
+                      console.log("Update user", updatedUser);
+                    }}
+                    onDeregister={(username) => {
+                      // Call your deregister API here
+                      console.log("Deregister user", username);
+                    }}
+                  />
+                </Col>
               )
             }
           />
