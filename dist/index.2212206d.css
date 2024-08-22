@@ -13199,4 +13199,41 @@ textarea.form-control-lg {
   border-radius: 4px;
   padding: 4px 12px;
 }
+
+.movie-view {
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+  display: flex;
+}
+
+.movie-view .movie-poster img {
+  border-radius: 10px;
+  max-width: 100%;
+  margin-bottom: 20px;
+}
+
+.movie-view .movie-details {
+  text-align: left;
+  max-width: 600px;
+}
+
+.movie-view .movie-title, .movie-view .movie-description, .movie-view .movie-genre, .movie-view .movie-director {
+  margin-bottom: 10px;
+}
+
+.movie-view .back-button {
+  color: #fff;
+  cursor: pointer;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  margin-top: 20px;
+  padding: 10px 20px;
+  text-decoration: none;
+}
+
+.movie-view .back-button:hover {
+  background-color: #0056b3;
+}
 /*# sourceMappingURL=index.2212206d.css.map */

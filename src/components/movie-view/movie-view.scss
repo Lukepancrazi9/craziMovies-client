@@ -5,3 +5,40 @@
     border: none;
     border-radius: 4px;
   }
+
+  .movie-view {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+  
+    .movie-poster img {
+      max-width: 100%;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+  
+    .movie-details {
+      max-width: 600px;
+      text-align: left;
+    }
+  
+    .movie-title, .movie-description, .movie-genre, .movie-director {
+      margin-bottom: 10px;
+    }
+  
+    .back-button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+  
+    .back-button:hover {
+      background-color: #0056b3;
+    }
+  }

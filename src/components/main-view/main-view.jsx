@@ -134,7 +134,7 @@ export const MainView = () => {
                       className="mb-4"
                       key={movie.Id}
                     >
-                      <MovieCard movie={movie} onFavorite={() => toggleFavorite(movie.Id)} />
+                      <MovieCard movie={movie} user={user} onFavorite={() => toggleFavorite(movie.Id)} />
                     </Col>
                   ))}
                 </>

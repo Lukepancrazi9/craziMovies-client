@@ -15,7 +15,7 @@ export const ProfileView = ({ user, movies, onUpdateUser, onDeregister }) => {
   const token = localStorage.getItem("token"); // Ensure token is properly retrieved
 
   useEffect(() => {
-    if (!user.Username || !token) return;
+    if (!user?.Username || !token) return;
 
     fetch(`https://crazi-movies-5042ca35c2c0.herokuapp.com/users/${user.Username}`, {
       headers: { Authorization: `Bearer ${token}` }
@@ -28,15 +28,38 @@ export const ProfileView = ({ user, movies, onUpdateUser, onDeregister }) => {
         console.error("Error fetching user data:", e);
         setError("Failed to load favorite movies.");
       });
-  }, [user.Username, token, movies]);
+  }, [user?.Username, token, movies]);
 
   const handleUpdate = () => {
-    onUpdateUser({ Username: username, Password: password, Email: email, Birthday: birthdate });
+    fetch(`https://crazi-movies-5042ca35c2c0.herokuapp.com/users/${user.Username}`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ Username: username, Password: password, Email: email, Birthday: birthdate })
+    })
+    .then(response => response.json())
+    .then(updatedUser => {
+      onUpdateUser(updatedUser);
+    })
+    .catch(e => {
+      console.error("Error updating user data:", e);
+    });
   };
-
+  
   const handleDeregister = () => {
-    onDeregister(user.Username);
-    navigate('/login');
+    fetch(`https://crazi-movies-5042ca35c2c0.herokuapp.com/users/${user.Username}`, {
+      method: 'DELETE',
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    .then(() => {
+      onDeregister(user.Username);
+      navigate('/login');
+    })
+    .catch(e => {
+      console.error("Error deregistering user:", e);
+    });
   };
 
   return (
