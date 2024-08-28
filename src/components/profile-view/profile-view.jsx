@@ -76,13 +76,15 @@ export const ProfileView = ({ user, token, onUpdateUser, onDeregister, toggleFav
         })
         .then(response => {
             if (response.ok) {
-                return response.json(); // Return the updated user data
+                return response.json(); // Return the updated user data and new token
             } else {
                 throw new Error('Failed to update profile.');
             }
         })
-        .then(updatedUserData => {
+        .then(({ user: updatedUserData, token: newToken }) => {
             onUpdateUser(updatedUserData); // Update user state with the new data
+            localStorage.setItem('token', newToken); // Update the stored token
+            alert('Profile updated successfully. Please log in with your new username.');
         })
         .catch(error => {
             console.error('Error updating profile:', error);
