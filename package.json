@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@parcel/watcher": "^2.4.1",
     "@types/react-dom": "^18.3.0",
     "bootstrap": "5.2.0",
     "prop-types": "^15.8.1",
